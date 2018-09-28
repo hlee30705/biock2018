@@ -1,0 +1,71 @@
+body { 
+	background-color: #e5e5e5; 
+	color: #201715;
+}
+
+/*.none { display: none !important; }*/
+
+.full-height { height: 100vh; }
+
+.eq-height-cols {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.valign-wrapper .row { width: 100%; }
+
+@media only screen and (min-width: 993px) {
+	.container {
+	    width: 90%;
+	}
+}
+
+.main-search-btn-wrap { justify-content: space-evenly; }
+
+.divider { background-color: #201715; }
+
+.container-content { 
+	width: 95%; 
+	margin-top: 96px;	
+}
+
+
+.filter-outer {
+	width: 250px;
+/*     background: #199da1; */
+	background: #fff;
+}
+.filter-container {
+    position: relative;
+     display: flex;
+    flex-direction: column;
+    flex-basis: 250px;
+    flex-shrink: 0;
+    width: 250px;
+/*     background: #199da1; */
+	background: #fff;
+    box-sizing: content-box;
+    visibility: visible;
+    height: 100vh;
+    /*overflow: scroll;*/
+    float:left; 
+    position: fixed;
+}
+
+.filter-result {
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 282px;
+}
+
+/* .top-bar { position: fixed; } */
+
+.filterland {
+	padding: 9px 16px;
+	overflow: scroll;
+}
+
+.collection a.collection-item { color: #201715; }
+
+.filterland label { color: #201715; }
