@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+                            "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<plugins>
+    	<plugin interceptor="com.biock.pilot2018.common.SQLLoggingPlugin"></plugin>
+    </plugins>
+    <mappers>
+        <mapper resource="META-INF/biock2018MyBatisMapper/pilot2018Mapper.xml" />
+    </mappers>
+    
+</configuration>

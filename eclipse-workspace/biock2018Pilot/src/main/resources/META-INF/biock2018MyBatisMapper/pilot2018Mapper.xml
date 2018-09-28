@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biock.pilot2018.dao.pilot2018Dao">
+
+	<resultMap type="com.biock.pilot2018.vo.commCodeVo" id="commCode">
+		<result column="commCode" property="commCode"/>
+		<result column="commCodeNm" property="commCodeNm"/>
+	</resultMap>
+	
+	<resultMap type="com.biock.pilot2018.vo.brstCncrDataVo" id="brstCncrData">
+		<result column="dataId" property="dataId"/>
+		<result column="ownerId" property="ownerId"/>
+		<result column="indUserBirthDt" property="indUserBirthDt"/>
+		<result column="indUserRaceCd" property="indUserRaceCd"/>
+		<result column="indUserRaceCdNm" property="indUserRaceCdNm"/>
+		<result column="indUserGender" property="indUserGender"/>
+		<result column="dataTypeCd" property="dataTypeCd"/>
+		<result column="dataTypeCdNm" property="dataTypeCdNm"/>
+		<result column="dataCateCd" property="dataCateCd"/>
+		<result column="dataCateCdNm" property="dataCateCdNm"/>
+		<result column="dataAcqDt" property="dataAcqDt"/>
+		<result column="dataMnpYn" property="dataMnpYn"/>
+		<result column="dataFmlyYn" property="dataFmlyYn"/>
+		<result column="dataFrmt1Cd" property="dataFrmt1Cd"/>
+		<result column="dataFrmt1CdNm" property="dataFrmt1CdNm"/>
+		<result column="dataTmrSz" property="dataTmrSz"/>
+		<result column="dataPnStg" property="dataPnStg"/>
+		<result column="dataHstGr" property="dataHstGr"/>
+		<result column="dataAcqSiteCd" property="dataAcqSiteCd"/>
+		<result column="dataAcqSiteCdNm" property="dataAcqSiteCdNm"/>
+		<result column="dataEstgnYn" property="dataEstgnYn"/>
+		<result column="dataPrgtnYn" property="dataPrgtnYn"/>
+		<result column="dataHer2Yn" property="dataHer2Yn"/>
+		<result column="dataRfsYn" property="dataRfsYn"/>
+		<result column="dataRfsTime" property="dataRfsTime"/>
+		<result column="dataDmfsYn" property="dataDmfsYn"/>
+		<result column="dataDmfsTime" property="dataDmfsTime"/>
+		<result column="dataRfsDt" property="dataRfsDt"/>
+		<result column="dataRfsSiteCd" property="dataRfsSiteCd"/>
+		<result column="dataRfsSiteCdNm" property="dataRfsSiteCdNm"/>
+		<result column="dataDmfsDt" property="dataDmfsDt"/>
+		<result column="dataDmfsSiteCd" property="dataDmfsSiteCd"/>
+		<result column="dataDmfsSiteCdNm" property="dataDmfsSiteCdNm"/>	
+	</resultMap>
+
+	<select id="getCodeDataByCategory" parameterType="java.lang.String" resultMap="commCode">
+	<![CDATA[
+		SELECT a.COMM_CODE AS commCode ,
+		       a.COMM_CODE_NM AS commCodeNm 
+		  FROM BCK_COMM_CODE_M a 
+		 WHERE 1 = 1
+		   AND a.DEL_YN = 'N'
+		   AND a.USE_YN = 'Y'
+		   AND a.CATE_CODE = #{cateCode}
+	
+	]]>
+	</select>
+	
+	<select id="getBrstCancerData" parameterType="com.biock.pilot2018.vo.brstCncrDataVo" resultMap="brstCncrData">
+
+		SELECT a.DATA_ID AS dataId ,
+			   a.OWNER_ID AS ownerId ,
+			   b.IND_USER_BIRTH_DT AS indUserBirthDt ,
+			   b.IND_USER_RACE_CD AS indUserRaceCd ,
+			   a.DATA_ACQ_DT AS dataAcqDt ,
+			 ( SELECT C.COMM_CODE_NM 
+			     FROM BCK_COMM_CODE_M C
+			    WHERE C.COMM_CODE = b.IND_USER_RACE_CD
+			      AND C.CATE_CODE = 'ETHNY' ) AS indUserRaceCdNm ,
+			   b.IND_USER_GENDER AS indUserGender ,
+			   a.DATA_TYPE_CD AS dataTypeCd ,
+			 ( SELECT C.COMM_CODE_NM 
+			     FROM BCK_COMM_CODE_M C
+			    WHERE C.COMM_CODE = a.DATA_TYPE_CD
+			      AND C.CATE_CODE = 'PMTSS' ) AS dataTypeCdNm ,
+			   a.DATA_CATE_CD AS dataCateCd ,
+			 ( SELECT C.COMM_CODE_NM 
+			     FROM BCK_COMM_CODE_M C
+			    WHERE C.COMM_CODE = a.DATA_CATE_CD
+			      AND C.CATE_CODE = 'BDCTGR' ) AS dataCateCdNm ,
+			   a.DATA_FRMT1_CD AS dataFrmt1Cd ,
+			 ( SELECT C.COMM_CODE_NM
+			     FROM BCK_COMM_CODE_M C
+			    WHERE C.COMM_CODE = a.DATA_FRMT1_CD
+			      AND C.CATE_CODE = 'FRMT1' ) AS dataFrmt1CdNm ,
+			   a.DATA_ACQ_SITE_CD AS dataAcqSiteCd ,
+			 ( SELECT C.COMM_CODE_NM
+			     FROM BCK_COMM_CODE_M C
+			    WHERE C.COMM_CODE = a.DATA_ACQ_SITE_CD
+			      AND C.CATE_CODE = 'HSPTL' ) AS dataAcqSiteCdNm ,
+			   a.DATA_RFS_YN AS dataRfsYn ,
+			   a.DATA_DMFS_YN AS dataDmfsYn ,
+			   a.DATA_ESTGN_YN AS dataEstgnYn ,
+			   a.DATA_PRGTN_YN AS dataPrgtnYn ,
+			   a.DATA_HER2_YN AS  dataHer2Yn ,
+			   a.DATA_MNP_YN AS dataMnpYn ,
+			   a.DATA_FMLY_YN AS dataFmlyYn ,
+			   a.DATA_TMR_SZ AS dataTmrSz ,
+			   a.DATA_HST_GR AS dataHstGr ,
+			   a.DATA_PN_STG AS dataPnStg ,
+			   date_part('year' ,
+						   age(to_date(to_char(current_date , 'YYYYMMDD'), 'YYYYMMDD')
+							  ,  to_date(b.ind_user_birth_dt, 'YYYYMMDD') ) ) AS indUserAge
+	      FROM BCK_BIO_DATA_M a , BCK_IND_USER_M b
+	     WHERE a.OWNER_ID = b.IND_USER_ID
+	       AND a.DEL_YN = 'N'
+	       AND a.DATA_TYPE_CD = #{dataTypeCd} 
+	     <if test='dataFrmt1Cd != null and dataFrmt1Cd != ""'>
+	       AND a.DATA_FRMT1_CD = #{dataFrmt1Cd}
+	     </if>
+	     <if test='dataIdArr != null' >
+	       AND a.DATA_ID IN 
+		     <foreach collection='dataIdArr' item='dataId'  open='(' close=')' separator=',' >
+	            #{dataId}
+	         </foreach>
+         </if>
+			  
+	
+	</select>
+	
+	<select id="getMaxPchRqstSeq" resultType="java.lang.String">
+	<![CDATA[
+	    SELECT TO_CHAR( CURRENT_DATE , 'YYYYMMDD') || 'RQ' ||
+	           LPAD( TO_CHAR( COALESCE ( MAX( SUBSTR(A.DATA_RQST_ORDER_NO , 11 , 17 ) ) , '0') ::integer+1 , 'FM999999' ) , 6 , '0' ) AS maxRqstSeq
+		  FROM BCK_DATA_PCH_RQST_I A WHERE A.DATA_PCH_RQST_DT = TO_CHAR( CURRENT_DATE , 'YYYYMMDD' )     
+	]]>
+	</select>
+	
+	<insert id="savePchRqstInfo" parameterType="com.biock.pilot2018.vo.brstCncrRqstVo">
+	<![CDATA[
+		INSERT INTO BCK_DATA_PCH_RQST_I
+		    ( DATA_RQST_ORDER_NO , 
+		      DATA_TYPE_CD ,
+		      DATA_CATE_CD ,
+		      DATA_PCH_RQST_ST_CD ,
+		      DATA_PCH_RQST_DT ,
+		      DATA_RQST_USER_EMAIL ,
+		      DATA_RQST_USER_NM ,
+		      DATA_RQST_RSCH_LEAD ,
+		      DATA_RSCH_PRPS ,
+		      EXPC_SMPL_USG ,
+		      ADDTNL_RQST ,
+		      CMPLC_MSG ,
+		      DEL_YN ,
+		      FRST_REG_ID ,
+		      FRST_REG_DTM ,
+		      FNL_UPD_ID ,
+		      FNL_UPD_DTM )
+		 VALUES
+		    (
+		     #{dataRqstOrderNo} ,
+		     #{dataTypeCd} ,
+		     #{dataCateCd} ,
+		     'RQSTD' ,
+		     TO_CHAR( CURRENT_DATE , 'YYYYMMDD' ) ,
+		     #{dataRqstUserEmail} ,
+		     #{dataRqstUserNm} ,
+		     #{dataRqstRschLead} ,
+		     #{dataRschPrps} ,
+		     #{expcSmplUsg} ,
+		     #{addtnlRqst} ,
+		     #{cmplcMsg} ,
+		     'N' ,
+		     'biock2018' ,
+		     TO_CHAR( CURRENT_DATE , 'YYYYMMDD' ) ,
+		     'biock2018' ,
+		     TO_CHAR( CURRENT_DATE , 'YYYYMMDD' )
+		     )
+		      
+		      
+	]]>
+	</insert>
+	
+	<insert id="savePchRqstIndInfo" parameterType="com.biock.pilot2018.vo.brstCncrRqstVo">
+	<![CDATA[
+		INSERT INTO BCK_DATA_PCH_RQST_IND_I
+		    ( DATA_RQST_ORDER_NO ,
+		      DATA_ID ,
+		      DATA_OWNER_APPR_ST_CD ,
+		      DATA_OWNER_APPR_DT ,
+		      DEL_YN ,
+		      FRST_REG_ID ,
+		      FRST_REG_DTM ,
+		      FNL_UPD_ID ,
+		      FNL_UPD_DTM )
+		   VALUES
+		    ( #{dataRqstOrderNo} ,
+		      #{dataId} ,
+		      'PNAPPR' ,
+		      TO_CHAR( CURRENT_DATE , 'YYYYMMDD' ) ,
+		      'N' ,
+		      'biock2018' ,
+		       TO_CHAR( CURRENT_DATE , 'YYYYMMDD' ) ,
+		      'biock2018' ,
+		       TO_CHAR( CURRENT_DATE , 'YYYYMMDD' )
+		     )        
+	]]>
+	</insert>
+	
+    
+</mapper>
