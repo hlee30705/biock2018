@@ -93,4 +93,20 @@ public class biock2018Controller {
 		
 		return service.purchaseRequestHandler(paramMap);
 	}
+	
+	@RequestMapping(value = "/purchaseRequestStatus" , method = RequestMethod.POST)
+	public String toDataPurchaseRequest( @RequestParam("purchaseRequestOrderNo") String purcahseRequestOrderNo ) throws Exception {
+		
+		logger.info(" ### purchaseRequestStatus CONTROLLER ### ");
+		
+		return "jsp/dataPurchaseStatus";
+	}
+	
+	@RequestMapping(value = "/getDataPurchaseRequestStatusData" , method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getDataPurchaseRequestStatusData ( @RequestBody Map<String, Object> paramMap) throws Exception {
+		
+		logger.info(" ### getDataPurchaseRequestStatusData CONTROLLER ### ");
+		
+		return null;
+	}
 }

@@ -1,6 +1,5 @@
 package com.biock.pilot2018.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,22 +112,27 @@ public class biock2018Service {
 			@SuppressWarnings("unchecked")
 			List<brstCncrDataVo> jsonList = (List<brstCncrDataVo>) biockCollectionUtil.jsonArrToList((List) paramMap.get("rqstDataInfo") , new brstCncrDataVo());
 			
-			brstCncrRqstVo rqstIndVo = null;
+			Map<String, Object> paramDaoMap = new HashMap<String, Object>();
 			
-			for(int i = 0 ; i < jsonList.size() ; i++) {
-				
-				rqstIndVo = new brstCncrRqstVo();
-				rqstIndVo.setDataRqstOrderNo(maxRqstSeqno);
-				rqstIndVo.setDataId(jsonList.get(i).getDataId());
-				
-				totIndRqstCnt += dao.saveDataInfo("savePchRqstIndInfo", rqstIndVo);
-			}
+			paramDaoMap.put("maxRqstSeqno", maxRqstSeqno);
+			paramDaoMap.put("list", jsonList);
+			
+			totIndRqstCnt = dao.saveDataMultiInfo("savePchRqstIndInfo", paramDaoMap);
 		}
 		
 		rtnMap.put("rtnMsg" , " total "+String.valueOf(totIndRqstCnt)+" data was requested with order number : "+maxRqstSeqno);
 		rtnMap.put("purchaseRequestOrderNo", maxRqstSeqno);
 		
 		return rtnMap;
+	}
+	
+	public Map<String, Object> getDataPurchaseRequestStatusData( Map<String, Object> paramMap) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		
+		
+		return map;
 	}
 	
 

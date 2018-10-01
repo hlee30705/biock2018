@@ -1,12 +1,12 @@
-package com.biock.pilot2018.daoImpl;
+package com.biock.pilot2018.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.biock.pilot2018.dao.pilot2018Dao;
 import com.biock.pilot2018.vo.abstractVo;
 import com.biock.pilot2018.vo.commCodeVo;
 
@@ -16,6 +16,7 @@ public class brstCancerDaoImpl implements pilot2018Dao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<commCodeVo> getCodeData(String param) throws Exception {
 		// TODO Auto-generated method stub
@@ -38,6 +39,12 @@ public class brstCancerDaoImpl implements pilot2018Dao{
 	public int saveDataInfo(String queryId, abstractVo vo) throws Exception {
 		// TODO Auto-generated method stub
 		return (int) sqlSession.insert(queryId, vo);
+	}
+
+	@Override
+	public int saveDataMultiInfo(String queryId, Map<String, Object> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return (int) sqlSession.insert(queryId, paramMap);
 	}
 
 

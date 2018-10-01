@@ -29,7 +29,7 @@ public class biockCollectionUtil {
 	/**
 	 * return List of JavaBean with json ArrayList and javaBean as parameter
 	 * ex) List<yourVo> list = 
-	 * biockCollectionUtil.jsonArrToList ( (List) parameter.map("jsonArrayListKey") , new yourVo());
+	 * (List<yourVo>)biockCollectionUtil.jsonArrToList ( (List) parameter.map("jsonArrayKey") , new yourVo());
 	 * @param list 
 	 * @param vo
 	 * @return

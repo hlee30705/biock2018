@@ -30,7 +30,7 @@ public class SQLLoggingPlugin implements Interceptor {
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		// TODO Auto-generated method stub
-		logger.info(" ##### MyBatis SQL Interception ##### ");
+		logger.info(" ##### BIOCK 2018 MyBatis SQL Interception ##### ");
 		Object[] args = invocation.getArgs();
 		
 		logger.info(args[0].toString());

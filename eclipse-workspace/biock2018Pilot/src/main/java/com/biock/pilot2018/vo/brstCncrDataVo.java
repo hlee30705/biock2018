@@ -39,7 +39,7 @@ public class brstCncrDataVo extends abstractVo{
 	private String dataDmfsSiteCd;
 	private String dataDmfsSiteCdNm;
 	private int indUserAge;
-	private String dataIdArr[];
+	private String[] dataIdArr;
 	
 	public String getDataId() {
 		return dataId;
