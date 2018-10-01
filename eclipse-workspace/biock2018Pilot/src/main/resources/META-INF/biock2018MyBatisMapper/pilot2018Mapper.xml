@@ -53,6 +53,11 @@
 		   AND a.DEL_YN = 'N'
 		   AND a.USE_YN = 'Y'
 		   AND a.CATE_CODE = #{cateCode}
+		  
+		  UNION ALL
+		  
+		 SELECT 'ALL' AS commCode ,
+		        'ALL' AS commCodeNm 
 	
 	]]>
 	</select>
@@ -106,7 +111,7 @@
 	     WHERE a.OWNER_ID = b.IND_USER_ID
 	       AND a.DEL_YN = 'N'
 	       AND a.DATA_TYPE_CD = #{dataTypeCd} 
-	     <if test='dataFrmt1Cd != null and dataFrmt1Cd != ""'>
+	     <if test='dataFrmt1Cd != null and dataFrmt1Cd != "" and dataFrmt1Cd != "ALL"'>
 	       AND a.DATA_FRMT1_CD = #{dataFrmt1Cd}
 	     </if>
 	     <if test='dataIdArr != null' >
@@ -172,8 +177,8 @@
 	]]>
 	</insert>
 	
-	<insert id="savePchRqstIndInfo" parameterType="com.biock.pilot2018.vo.brstCncrRqstVo">
-	<![CDATA[
+	<insert id="savePchRqstIndInfo" parameterType="java.util.Map">
+
 		INSERT INTO BCK_DATA_PCH_RQST_IND_I
 		    ( DATA_RQST_ORDER_NO ,
 		      DATA_ID ,
@@ -185,8 +190,9 @@
 		      FNL_UPD_ID ,
 		      FNL_UPD_DTM )
 		   VALUES
-		    ( #{dataRqstOrderNo} ,
-		      #{dataId} ,
+		   <foreach collection="list" item="item" separator=" , ">
+		    ( #{maxRqstSeqno} ,
+		      #{item.dataId} ,
 		      'PNAPPR' ,
 		      TO_CHAR( CURRENT_DATE , 'YYYYMMDD' ) ,
 		      'N' ,
@@ -195,7 +201,7 @@
 		      'biock2018' ,
 		       TO_CHAR( CURRENT_DATE , 'YYYYMMDD' )
 		     )        
-	]]>
+			</foreach>
 	</insert>
 	
     
