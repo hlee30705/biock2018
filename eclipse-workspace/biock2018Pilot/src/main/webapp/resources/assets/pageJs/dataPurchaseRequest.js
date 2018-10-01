@@ -67,6 +67,12 @@ this.requestDataPurchase = function()
 
 var requestDataPurchaseSuccess = function(response)
 {
-	console.log(" success ");
 	alert(response.rtnMsg);
+	$('#frm2Div').append('<form id="frm2" method="post">'
+			+'<input type="hidden" name="purchaseRequestOrderNo" value="'+response.purchaseRequestOrderNo+'"/>'
+			+'</form>');
+		
+	$('#frm2').attr('action' , '/pilot2018/purchaseRequestStatus');
+	$('#frm2').submit();
+	
 };
